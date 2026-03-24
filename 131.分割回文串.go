@@ -12,16 +12,23 @@ func partition(s string) [][]string {
 	strLen := len(s)
 
 	var dfs131 func(curIdx int, curRes []string)
-	var check func(curStr string) bool
 
-	check = func(curStr string) bool {
-		n := len(curStr)
-		for i := range n / 2 {
-			if curStr[i] != curStr[n-1-i] {
-				return false
+	dp := make([][]bool, strLen)
+	for i := range strLen {
+		dp[i] = make([]bool, strLen)
+	}
+	for i := range strLen {
+		dp[i][i] = true
+	}
+
+	for len := 2; len <= strLen; len++ {
+		for left := 0; left+len-1 < strLen; left++ {
+			right := left + len - 1
+			if left+1 > right-1 {
+				dp[left+1][right-1] = true
 			}
+			dp[left][right] = dp[left+1][right-1] && (s[left] == s[right])
 		}
-		return true
 	}
 
 	dfs131 = func(curIdx int, curRes []string) {
@@ -36,7 +43,7 @@ func partition(s string) [][]string {
 		dfs131(curIdx+1, curRes)
 		curRes = curRes[:len(curRes)-1]
 		for end := curIdx + 1; end < strLen; end++ {
-			if s[end] == s[curIdx] && check(s[curIdx:end+1]) {
+			if dp[curIdx][end] {
 				curRes = append(curRes, s[curIdx:end+1])
 				dfs131(end+1, curRes)
 				curRes = curRes[:len(curRes)-1]
