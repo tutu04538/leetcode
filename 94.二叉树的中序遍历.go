@@ -32,32 +32,32 @@ func recursiveInorderTraversal(root *TreeNode, res *[]int) {
 	recursiveInorderTraversal(root.Right, res)
 }
 
-type Stack struct {
+type Stack94 struct {
 	items []*TreeNode
 }
 
-func (s *Stack) Push(item *TreeNode) {
+func (s *Stack94) Push(item *TreeNode) {
 	s.items = append(s.items, item)
 }
 
-func (s *Stack) Pop() (*TreeNode, error) {
+func (s *Stack94) Pop() (*TreeNode, error) {
 	if len(s.items) == 0 {
-		return nil, fmt.Errorf("stack is empty")
+		return nil, fmt.Errorf("Stack94 is empty")
 	}
 	res := s.items[len(s.items)-1]
 	s.items = s.items[:len(s.items)-1]
 	return res, nil
 }
 
-func (s *Stack) Peek() (*TreeNode, error) {
+func (s *Stack94) Peek() (*TreeNode, error) {
 	if len(s.items) == 0 {
-		return nil, fmt.Errorf("stack is empty")
+		return nil, fmt.Errorf("Stack94 is empty")
 	}
 	res := s.items[len(s.items)-1]
 	return res, nil
 }
 
-func (s *Stack) IsEmpty() bool {
+func (s *Stack94) IsEmpty() bool {
 	return len(s.items) == 0
 }
 
@@ -72,18 +72,18 @@ func inorderTraversal(root *TreeNode) []int {
 	// 迭代方式中序遍历
 	// 使用栈进行维护，每次 pop 时，说明该子树的左子树已经遍历完毕
 	res := []int{}
-	stack := Stack{}
+	Stack94 := Stack94{}
 	cur := root
 	for cur != nil {
-		stack.Push(cur)
+		Stack94.Push(cur)
 		cur = cur.Left
 	}
-	for !stack.IsEmpty() {
-		cur, _ := stack.Pop()
+	for !Stack94.IsEmpty() {
+		cur, _ := Stack94.Pop()
 		res = append(res, cur.Val)
 		cur = cur.Right
 		for cur != nil {
-			stack.Push(cur)
+			Stack94.Push(cur)
 			cur = cur.Left
 		}
 	}
